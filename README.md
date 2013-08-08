@@ -1,10 +1,10 @@
-followme
+FollowME
 ========
 
-FollowME Source Control.\n
-This application is developed for the Course "Web and Mobile Advanced Technologies"\n
-\n
-Participants:\n
-o Lior solomon\n
-o Alexie Sragovich\n
-o Alex Tilkin\n
+FollowME Source Control
+This application is developed for the Course "Web and Mobile Advanced Technologies"
+
+Participants:
+o Lior solomon
+o Alexie Sragovich
+o Alex Tilkin
