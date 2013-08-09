@@ -1,7 +1,6 @@
 var common = require('./FollowMeServerDbConnect');
 
 
-
 /*************************************************************/
 /* FollowMeGetCurrentLocation -                              */
 /* Retreives the current location of the user                */

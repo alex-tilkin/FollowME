@@ -13,11 +13,10 @@ app.configure(function () {
     app.use(express.bodyParser());
 });
 
-
 /* Methods linkking to REST methods */
 app.get('/users/getcurrentlocation/:email', followMeApi.FollowMeGetCurrentLocation);
 app.post('/users/setpath/:email', followMeApi.FollowMeSetPath);
-app.delete('/users/droppath', followMeApi.FollowMeDropPath);
+app.delete('/users/droppath/:email', followMeApi.FollowMeDropPath);
 app.post('/users/sendpath', followMeApi.FollowMeSendPath);
 app.post('/users/sendcurrentlocation', followMeApi.FollowMeSendLocation);
 
