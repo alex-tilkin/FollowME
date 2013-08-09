@@ -1,0 +1,21 @@
+API Using examples:
+
+o FollowMeGetCurrentLocation:
+
+localhost:3000/users/getcurrentlocation/alextilk@gmail.com
+
+o FollowMeSetPath:
+
+curl -X POST -H "Content-Type: application/json" -d '{"Start":{"Longtitude":400, "Latitude":300}, "End":{"Longtitude":500, "Latitude":400}, "Milestones":[{"Longtitude":420, "Latitude":320}, {"Longtitude":450, "Latitude":350}, {"Longtitude":480, "Latitude":380}], "CurrentLocation":{"Longtitude":20, "Latitude":20}}' http://localhost:3000/users/setpath/alextilk@gmail.com
+
+o FollowMeDropPath
+
+curl -X DELETE http://localhost:3000/users/droppath/alextilk@gmail.com
+
+o FollowMeSendPath
+
+curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://localhost:3000/users/sendpath
+
+o FollowMeSendCurrentLocation
+
+curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://localhost:3000/users/sendcurrentlocation
