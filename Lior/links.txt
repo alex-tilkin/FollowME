@@ -1,0 +1,12 @@
+http://localhost:3000/users/getuser/lior@gmail.com
+http://localhost:3000/users/getall/
+http://localhost:3000/users/deleteuser/lior@gmail.com
+http://localhost:3000/users/login/lior@gmail.com/1234
+http://localhost:3000/users/addfriend/lior@gmail.com
+http://localhost:3000/users/addfollower/lior@gmail.com
+http://localhost:3000/users/adduser/
+http://localhost:3000/users/displaynameexist/LiorS
+http://localhost:3000/users/userexist/lior@gmail.com
+
+
+http://localhost:3000/users/signin/lior@gmail.com/1234/lolo/kasharel/lio/14.12.1984/add/safe

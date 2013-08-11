@@ -1,6 +1,4 @@
 var common = require('./FollowMeServerDbConnect');
-var usersCollection = common.GetUsersCollectionName();
-var followMeDB = common.GetDBConnection();
 
 var Constants = {
 	USER_LOGIN_SUCCESS: 'A00',
@@ -22,6 +20,8 @@ var Constants = {
 */
 exports.followMeGetUserByEmail = function(req, res) {
     console.log("FollowMeGetUserByEmail, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
     var email = req.params.email;
     if (email) {
 		console.log('Retrieving user details by given email: ' + email);
@@ -44,6 +44,8 @@ exports.followMeGetUserByEmail = function(req, res) {
 */
 exports.followMeGetAllUsers = function(req, res) {
     console.log("FollowMeGetAllUsers, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
 	console.log('Retrieving All users');
 	followMeDB.collection(usersCollection, function(err, collection) {
 		collection.find().toArray(function(error, items) {
@@ -65,6 +67,8 @@ exports.followMeGetAllUsers = function(req, res) {
 //TODO: unit test.
 exports.followMeDeleteUser = function(req, res) {
     console.log("followMeDeleteUser, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
 	var id = req.params.id;
 	console.log('Deleting user by given id: ' + id);
 	followMeDB.collection(usersCollection, function(err, collection) {
@@ -92,6 +96,8 @@ exports.followMeDeleteUser = function(req, res) {
 //TODO: maybe change to put method
 exports.FollowMeLogIn = function(req, res) {
     console.log("FollowMeLogIn, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
 	var email = req.params.email;
 	var password = req.params.password;
 	console.log("email: " + email);
@@ -137,6 +143,8 @@ exports.FollowMeLogIn = function(req, res) {
 */
 exports.FollowMeIsUserExist = function(req, res) {
     console.log("FollowMeIsUserExist, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
 	var email = req.params.email;
 			
 	if (email) {
@@ -168,6 +176,8 @@ exports.FollowMeIsUserExist = function(req, res) {
 */
 exports.FollowMeIsDisplayNameExist = function(req, res) {
     console.log("FollowMeIsDisplayNameExist, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
 	var displayName = req.params.displayName;
 			
 	if (displayName) {
@@ -201,6 +211,8 @@ exports.FollowMeIsDisplayNameExist = function(req, res) {
 //TODO: add API message for success and for failed.
 exports.FollowMeSignIn = function(req, res) {
     console.log("FollowMeSignIn, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
 	var user = req.body;
 	console.log("User: \n" + user);
 	
@@ -227,12 +239,26 @@ exports.FollowMeSignIn = function(req, res) {
 //TODO: check if nodejs/express has session if yes than the function do not need to get the user email.
 exports.FollowMeSetFollower = function(req, res) {
     console.log("FollowMeSetFollower, In");
-	
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
+	var follower = req.body;
+	console.log("/FollowMeSetFollower, follower details: " + JSON.stringify(follower) + "\n" );
 	//TODO:implement.
     var email = req.params.email;
 	
 	if (email) {
-		
+		followMeDB.collection(usersCollection, function(err, collection) {
+			//TODO: check nodjs/express for session. if yes change email to id.
+			collection.update({'Email':email}, {$push:{'Follower' : follower}}, {safe:true}, function(err, result) {
+				if (err) {
+					console.log('Error updating user Follower: ' + err);
+					res.send({'error':'An error has occurred'});
+				} else {
+					console.log('' + result + ' document(s) updated');
+					res.send(follower);
+				}
+			});
+		});	
 	}
 	console.log("FollowMeSetFollower, Out");
 }
@@ -247,6 +273,8 @@ exports.FollowMeSetFollower = function(req, res) {
 //TODO: complete. need to send all the user information???
 exports.FollowMeAddFriend = function(req, res) {
     console.log("FollowMeAddFriend, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
 	var email = req.params.email;
 	console.log('email: ' + email);
 	var friend = req.body;
@@ -254,9 +282,9 @@ exports.FollowMeAddFriend = function(req, res) {
 	if (email) {
 		followMeDB.collection(usersCollection, function(err, collection) {
 			//TODO: check nodjs/express for session. if yes change email to id.
-			collection.update({'Email':email}, {$set:{'Friends' : friend}}, {safe:true}, function(err, result) {
+			collection.update({'Email':email}, {$push:{'Friends' : friend}}, {safe:true}, function(err, result) {
 				if (err) {
-					console.log('Error updating users students: ' + err);
+					console.log('Error updating user freind: ' + err);
 					res.send({'error':'An error has occurred'});
 				} else {
 					console.log('' + result + ' document(s) updated');
@@ -270,3 +298,52 @@ exports.FollowMeAddFriend = function(req, res) {
 }
 
 /*************************************************************************************************/
+/*
+*FollowMeSignIn
+*This function make a user registration.
+*/
+/*exports.FollowMeSignIn = function(req, res) {
+    console.log("FollowMeSignIn, In");
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
+	var email = req.params.email;
+	var password = req.params.password;
+	var firstName = req.params.firstName;
+	var lastName = req.params.lastName;
+	var displayName = req.params.displayName;
+	var birthDay = req.params.birthDay;//Format: dd#mm#yyyy
+	var address = req.params.address;//Format country#city#street#house#apartment.
+	var progressStatus = req.params.progressStatus;
+	console.log("user details:\n\nemail: " + email + "\n" + 
+					"password: " + password + "\n" + 
+					"firstName: " + firstName + "\n" + 
+					"lastName: " + lastName + "\n" + 
+					"displayName: " + displayName + "\n" + 
+					"birthDay: " + birthDay + "\n" + 
+					"address: " + address + "\n" + 
+					"progressStatus: " + progressStatus + 
+					"\n");
+					
+	//Check if user Email exist
+	if (email) {
+		console.log('Check if user Email exist: ' + email);
+		followMeDB.collection(usersCollection, function(err, collection) {
+			collection.findOne({'Email' : email}, function(error, item) {
+				
+				if (item) {//user exist.
+					console.log("User already Exist in the db.");
+					console.log("res msg will be send: " + Constants.USER_EXIST);
+					res.setHeader("Content-Type", "text/plain");
+					res.send(Constants.USER_EXIST);
+				} 
+			});
+		});
+	} 
+	
+	if (email && password && firstName && lastName && displayName && birthDay && address && progressStatus) {
+		console.log("FollowMeSignIn, user details not null");
+		
+	}
+    
+	console.log("FollowMeSignIn, Out");
+}*/
