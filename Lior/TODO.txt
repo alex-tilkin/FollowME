@@ -1,0 +1,10 @@
+TODO:
+-----
+-Create file name: ConstantsBase.js , copy & past it from LiorAPI
+-Add to the document the messages API.
+-Decide which parameters are mandatory in user registration.
+-Add server side validation for user registration.
+-Add to the document Format message for birthDay and address.
+-check if nodejs as session if yes than the function do not need to get the user email.
+-I think add friend to a user and set follower should contain only his friend email.
+-Add to the document function assumptions
