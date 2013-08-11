@@ -7,47 +7,43 @@ var followMeDB = null;
 
 var mongo = require('mongodb');
 
-var port = (process.env.VMC_APP_PORT || 3000);
-var host = (process.env.VCAP_APP_HOST || 'localhost');
+//var port = (process.env.VMC_APP_PORT || 3000);
+//var host = (process.env.VCAP_APP_HOST || 'localhost');
 
 /* We enter this code only once */
-if(process.env.VCAP_SERVICES)
-{
+if(process.env.VCAP_SERVICES){
     /* JSON is a javascript object */
-    var env = JSON.parse(process.env.VCAP_SERVICES);
-    var mongo = env['mongodb-1.8'][0]['credentials'];
+  var env = JSON.parse(process.env.VCAP_SERVICES);
+  var mongo = env['mongodb-1.8'][0]['credentials'];
 }
-else
-{
-    var mongo = 
-    {
-        "hostname":"localhost",
-        "port":27017,
-        "username":"",
-        "password":"", 
-        "name":"",
-        "db":"FollowMeDB"
-    }
+else{
+  var mongo = {
+    "hostname":"localhost",
+    "port":27017,
+    "username":"",
+    "password":"", 
+    "name":"",
+    "db":"FollowMeDB"
+  }
 }
 
-var generate_mongo_url = function(obj)
-{
+var generate_mongo_url = function(obj){
     /* According to where we are, we init our connection params */
   obj.hostname = (obj.hostname || 'localhost');
   obj.port = (obj.port || 27017);
   obj.db = (obj.db || 'test');
 
-  if(obj.username && obj.password)
-  {
+  if(obj.username && obj.password){
     return "mongodb://" + obj.username + ":" + obj.password + "@" + obj.hostname + ":" + obj.port + "/" + obj.db;
   }
-  else
-  {
+  else{
     return "mongodb://" + obj.hostname + ":" + obj.port + "/" + obj.db;
   }
 }
 
 var mongourl = generate_mongo_url(mongo);
+
+
 
 require('mongodb').connect( mongourl, 
                             function(   err, 
@@ -155,6 +151,7 @@ var insertSampleUsers = function()
 
 
 /* FolloME Sample Data */
+
 var sampleUsers = 
 [
     {
@@ -262,21 +259,21 @@ var sampleEvents =
         {
             Date:
             {
-                Day: "7",
-                Month: "8",
-                Year: "2013"
+                Day: 7,
+                Month: 8,
+                Year: 2013
             },
             Time:
             {
-                Hours: "7",
-                Minutes: "18",
-                Seconds: "36"
+                Hours: 7,
+                Minutes: 18,
+                Seconds: 36
             }
         },
         Location:
         {
-            Longtitude: 854.56,
-            Latitude: 469.98
+            Longtitude: 112,
+            Latitude: 112
         }
     },
     {
@@ -290,21 +287,21 @@ var sampleEvents =
         {
             Date:
             {
-                Day: "2",
-                Month: "8",
-                Year: "2013"
+                Day: 2,
+                Month: 8,
+                Year: 2013
             },
             Time:
             {
-                Hours: "21",
-                Minutes: "18",
-                Seconds: "36"
+                Hours: 21,
+                Minutes: 18,
+                Seconds: 36
             }
         },
         Location:
         {
-            Longtitude: 758.56,
-            Latitude: 429.98
+            Longtitude: 111,
+            Latitude: 111
         }
     },
     {
@@ -318,21 +315,21 @@ var sampleEvents =
         {
             Date:
             {
-                Day: "23",
-                Month: "7",
-                Year: "2013"
+                Day: 23,
+                Month: 7,
+                Year: 2013
             },
             Time:
             {
-                Hours: "13",
-                Minutes: "46",
-                Seconds: "17"
+                Hours: 13,
+                Minutes: 46,
+                Seconds: 17
             }
         },
         Location:
         {
-            Longtitude: 750.56,
-            Latitude: 439.98
+            Longtitude: 111,
+            Latitude: 111
         }
     }
 ]

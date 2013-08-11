@@ -2,20 +2,44 @@ API Using examples:
 
 o FollowMeGetCurrentLocation:
 
-localhost:3000/users/getcurrentlocation/alextilk@gmail.com
+curl localhost:3000/users/getcurrentlocation/lior@gmail.com
 
 o FollowMeSetPath:
 
 curl -X POST -H "Content-Type: application/json" -d '{"Start":{"Longtitude":400, "Latitude":300}, "End":{"Longtitude":500, "Latitude":400}, "Milestones":[{"Longtitude":420, "Latitude":320}, {"Longtitude":450, "Latitude":350}, {"Longtitude":480, "Latitude":380}], "CurrentLocation":{"Longtitude":20, "Latitude":20}}' http://localhost:3000/users/setpath/alextilk@gmail.com
 
-o FollowMeDropPath
-
-curl -X DELETE http://localhost:3000/users/droppath/alextilk@gmail.com
-
 o FollowMeSendPath
 
 curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://localhost:3000/users/sendpath
 
+o FollowMeSetCurrentLocation
+
+curl -X POST -H "Content-Type: application/json" -d '{"Longtitude":113, "Latitude":113}' http://localhost:3000/users/setcurrentlocation/alextilk@gmail.com
+
 o FollowMeSendCurrentLocation
 
 curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://localhost:3000/users/sendcurrentlocation
+
+o FollowMeDropPath
+
+curl -X DELETE http://localhost:3000/users/droppath/alextilk@gmail.com
+
+o FollowMeCreateEvent
+
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "EventType":{"Event":"Fire"}}' http://localhost:3000/events/createevent/sralexei@gmail.com
+
+o FollowMeDropEvent
+
+curl -X DELETE -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}}' http://localhost:3000/events/dropevent/sralexei@gmail.com
+
+o FollowMeNotifyEmergency
+
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "To":"lior@gmail.com"}' http://localhost:3000/events/notifyemergency/alextilk@gmail.com
+
+o FollowMeChangeuserState
+
+curl -X POST -H "Content-Type: application/json" -d '{"ProgressStatus":"walking"}' http://localhost:3000/users/changeuserstate/alextilk@gmail.com
+
+o FollowMeGetAllNearbyEvents
+
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":111, "Latitude":111}}' http://localhost:3000/events/getnearbyevents/
