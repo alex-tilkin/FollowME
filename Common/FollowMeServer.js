@@ -17,16 +17,30 @@ app.configure(function ()
 
 /* linking methods to REST methods */
 
+/* GETs */
 app.get('/users/getcurrentlocation/:email', followMeApi.FollowMeGetCurrentLocation);
+app.get('/users/getuser/:email', followMeApi.followMeGetUserByEmail);
+app.get('/users/getall/', followMeApi.followMeGetAllUsers);
+app.get('/users/login/:email/:password', followMeApi.FollowMeLogIn);
+app.get('/users/userexist/:email', followMeApi.FollowMeIsUserExist);
+app.get('/users/displaynameexist/:displayName', followMeApi.FollowMeIsDisplayNameExist);
+
+/* POSTs */
 app.post('/users/setpath/:email', followMeApi.FollowMeSetPath);
-app.delete('/users/droppath/:email', followMeApi.FollowMeDropPath);
 app.post('/users/sendpath', followMeApi.FollowMeSendPath);
 app.post('/users/sendcurrentlocation', followMeApi.FollowMeSendLocation);
 app.post('/events/createevent/:email', followMeApi.FollowMeCreateEvent);
-app.delete('/events/dropevent/:email', followMeApi.FollowMeDropEvent);
 app.post('/events/notifyemergency/:email', followMeApi.FollowMeNotifyEmergency);
 app.post('/users/changeuserstate/:email', followMeApi.FollowMeChangeuserState);
 app.post('/events/getnearbyevents/', followMeApi.FollowMeGetAllNearbyEvents);
 app.post('/users/setcurrentlocation/:email', followMeApi.FollowMeSetCurrentLocation);
+app.post('/users/addfriend/:email', followMeApi.FollowMeAddFriend);
+app.post('/users/adduser/', followMeApi.FollowMeSignIn);
+app.post('/users/addfollower/:email', followMeApi.FollowMeSetFollower);
+
+/* DELETEs */
+app.delete('/users/droppath/:email', followMeApi.FollowMeDropPath);
+app.delete('/events/dropevent/:email', followMeApi.FollowMeDropEvent);
+app.delete('/users/:id', followMeApi.followMeDeleteUser);
 
 app.listen(port,host);
