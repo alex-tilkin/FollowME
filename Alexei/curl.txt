@@ -1,0 +1,41 @@
+API Using examples:
+
+o FollowMeGetCurrentLocation:
+
+localhost:3000/users/getcurrentlocation/alextilk@gmail.com
+
+o FollowMeSetPath:
+
+curl -X POST -H "Content-Type: application/json" -d '{"Start":{"Longtitude":400, "Latitude":300}, "End":{"Longtitude":500, "Latitude":400}, "Milestones":[{"Longtitude":420, "Latitude":320}, {"Longtitude":450, "Latitude":350}, {"Longtitude":480, "Latitude":380}], "CurrentLocation":{"Longtitude":20, "Latitude":20}}' http://localhost:3000/users/setpath/alextilk@gmail.com
+
+o FollowMeDropPath
+
+curl -X DELETE http://localhost:3000/users/droppath/alextilk@gmail.com
+
+o FollowMeSendPath
+
+curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://localhost:3000/users/sendpath
+
+o FollowMeSendCurrentLocation
+
+curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://localhost:3000/users/sendcurrentlocation
+
+
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "EventType":{"Event":"Fire"}}' http://localhost:3000/events/createevent/sralexei@gmail.com
+
+curl -X DELETE -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}}' http://localhost:3000/events/dropevent/sralexei@gmail.com
+
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "To":"lior@gmail.com"}' http://localhost:3000/events/notifyemergency/alextilk@gmail.com
+
+curl -X POST -H "Content-Type: application/json" -d '{"ProgressStatus":"walking"}' http://localhost:3000/users/changeuserstate/alextilk@gmail.com
+
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":111, "Latitude":111}}' http://localhost:3000/events/getnearbyevents/
+
+curl -X POST -H "Content-Type: application/json" -d '{"Longtitude":113, "Latitude":113}' http://localhost:3000/users/setcurrentlocation/lior@gmail.com
+
+
+db.dealerships.save({"name":"Frank's Fords", "affiliation":"Ford", "location":{"Longtitude":51.10682735591432,"latitude":-114.11773681640625}})
+db.dealerships.save({"name":"Steve's Suzukis", "affiliation":"Suzuki", "location":{"Longtitude":51.09144802136697,"latitude":-114.11773681640625}})
+db.dealerships.save({"name":"Charlie's Chevrolets", "affiliation":"Chevrolet", "location":{"Longtitude":51.08282186160978,"latitude":-114.10400390625}})
+db.dealerships.save({"name":"Nick's Nissans", "affiliation":"Nissan", "location":{"Longtitude":51.12076493195686,"latitude":-113.98040771484375}})
+db.dealerships.save({"name":"Tom's Toyotas", "affiliation":"Toyota", "location":{"Longtitude":50.93939251390387,"latitude":-113.98040771484375}})
