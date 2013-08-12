@@ -19,8 +19,8 @@ app.configure(function ()
 
 /* GETs */
 app.get('/users/getcurrentlocation/:email', followMeApi.FollowMeGetCurrentLocation);
-app.get('/users/getuser/:email', followMeApi.followMeGetUserByEmail);
-app.get('/users/getall/', followMeApi.followMeGetAllUsers);
+app.get('/users/getuser/:email', followMeApi.FollowMeGetUserByEmail);
+app.get('/users/getall/', followMeApi.FollowMeGetAllUsers);
 app.get('/users/login/:email/:password', followMeApi.FollowMeLogIn);
 app.get('/users/userexist/:email', followMeApi.FollowMeIsUserExist);
 app.get('/users/displaynameexist/:displayName', followMeApi.FollowMeIsDisplayNameExist);
@@ -28,7 +28,7 @@ app.get('/users/displaynameexist/:displayName', followMeApi.FollowMeIsDisplayNam
 /* POSTs */
 app.post('/users/setpath/:email', followMeApi.FollowMeSetPath);
 app.post('/users/sendpath', followMeApi.FollowMeSendPath);
-app.post('/users/sendcurrentlocation', followMeApi.FollowMeSendLocation);
+app.post('/users/sendcurrentlocation', followMeApi.FollowMeSendCurrentLocation);
 app.post('/events/createevent/:email', followMeApi.FollowMeCreateEvent);
 app.post('/events/notifyemergency/:email', followMeApi.FollowMeNotifyEmergency);
 app.post('/users/changeuserstate/:email', followMeApi.FollowMeChangeuserState);
@@ -41,6 +41,6 @@ app.post('/users/addfollower/:email', followMeApi.FollowMeSetFollower);
 /* DELETEs */
 app.delete('/users/droppath/:email', followMeApi.FollowMeDropPath);
 app.delete('/events/dropevent/:email', followMeApi.FollowMeDropEvent);
-app.delete('/users/:id', followMeApi.followMeDeleteUser);
+app.delete('/users/deleteuser/:email', followMeApi.FollowMeDeleteUser);
 
 app.listen(port,host);

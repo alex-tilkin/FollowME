@@ -5,10 +5,8 @@ var dataBaseName = "FollowMeDB";
 /* Database Connection */
 var followMeDB = null;
 
+/* Access to MongoDB package */
 var mongo = require('mongodb');
-
-//var port = (process.env.VMC_APP_PORT || 3000);
-//var host = (process.env.VCAP_APP_HOST || 'localhost');
 
 /* We enter this code only once */
 if(process.env.VCAP_SERVICES){
@@ -95,6 +93,7 @@ exports.GetEventsCollectionName = function()
     return eventsCollection;
 }
 
+/* FollowME Maintanance Utils - END */
 var populateFollowMeDB = function(collectionName) 
 {
     if(collectionName == usersCollection)
@@ -151,7 +150,6 @@ var insertSampleUsers = function()
 
 
 /* FolloME Sample Data */
-
 var sampleUsers = 
 [
     {

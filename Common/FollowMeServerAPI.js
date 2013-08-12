@@ -13,12 +13,12 @@ var Constants = {
     USER_DISPLAY_NAME_EXIST: 'E04'
 };
 
-/*
-*FollowMeGetUserByEmail
-*This function return user details by given email.
-*get method.
-*/
-exports.followMeGetUserByEmail = function(req, res) {
+/*********************************************************************/
+/* FollowMeGetUserByEmail -                                          */
+/* This function return user details by given email.                 */
+/* get method.                                                       */
+/*********************************************************************/
+exports.FollowMeGetUserByEmail = function(req, res) {
     console.log("FollowMeGetUserByEmail, In");
     var usersCollection = common.GetUsersCollectionName();
     var followMeDB = common.GetDBConnection();
@@ -37,12 +37,13 @@ exports.followMeGetUserByEmail = function(req, res) {
 
     console.log("FollowMeGetUserByEmail, Out");
 }
-/*
-*FollowMeGetAllUsers
-*This function return all the users that stored on the db.
-*get method.
-*/
-exports.followMeGetAllUsers = function(req, res) {
+
+/*********************************************************************/
+/* FollowMeGetAllUsers -                                             */
+/* This function return all the users that stored on the db.         */
+/* get method.                                                       */
+/*********************************************************************/
+exports.FollowMeGetAllUsers = function(req, res) {
     console.log("FollowMeGetAllUsers, In");
     var usersCollection = common.GetUsersCollectionName();
     var followMeDB = common.GetDBConnection();
@@ -59,20 +60,20 @@ exports.followMeGetAllUsers = function(req, res) {
     console.log("FollowMeGetAllUsers, Out");
 }
 
-/*
-*followMeDeleteUser
-*This function delete user from the db by given id.
-*delete method.
-*/
-//TODO: unit test.
-exports.followMeDeleteUser = function(req, res) {
+/*********************************************************************/
+/* followMeDeleteUser -                                              */
+/* This function delete user from the db by given id.                */
+/* delete method                                                     */
+/*********************************************************************/
+exports.FollowMeDeleteUser = function(req, res) {
     console.log("followMeDeleteUser, In");
     var usersCollection = common.GetUsersCollectionName();
     var followMeDB = common.GetDBConnection();
-    var id = req.params.id;
-    console.log('Deleting user by given id: ' + id);
+    var email = req.params.email;
+
+    console.log('Deleting user by given email: ' + email);
     followMeDB.collection(usersCollection, function(err, collection) {
-        collection.remove({'sid':id}, {safe:true}, function(err, res) {
+        collection.remove({'email':email}, {safe:true}, function(err, res) {
             if (err) {
                 res.send({'error':'An error has occurred - ' + err});
             } else {
@@ -85,15 +86,14 @@ exports.followMeDeleteUser = function(req, res) {
     console.log("followMeDeleteUser, Out");
 }
 
-/*
-*FollowMeLogIn
-*This function make user login to the system by user credentials.
-*If the user credentials are not authenticate than the function will not
-*change the user ConnectionStatus.
-*The function send API messages respectively.
-*get method.
-*/
-//TODO: maybe change to put method
+/*********************************************************************/
+/* FollowMeLogIn -                                                   */
+/* This function make user login to the system by user credentials.  */
+/* If the user credentials are not authenticate than the             */
+/* function will not change the user ConnectionStatus.               */
+/* The function send API messages respectively.                      */
+/* get method.                                                       */
+/*********************************************************************/
 exports.FollowMeLogIn = function(req, res) {
     console.log("FollowMeLogIn, In");
     var usersCollection = common.GetUsersCollectionName();
@@ -135,12 +135,11 @@ exports.FollowMeLogIn = function(req, res) {
     console.log("FollowMeLogIn, Out");
 }
 
-
-/*
-*FollowMeIsUserExist
-*This function make a user registration.
-*get method.
-*/
+/*********************************************************************/
+/* FollowMeIsUserExist -                                             */
+/* This function make a user registration.                           */
+/* get method.                                                       */
+/*********************************************************************/
 exports.FollowMeIsUserExist = function(req, res) {
     console.log("FollowMeIsUserExist, In");
     var usersCollection = common.GetUsersCollectionName();
@@ -169,11 +168,11 @@ exports.FollowMeIsUserExist = function(req, res) {
     console.log("FollowMeIsUserExist, Out");
 }
 
-/*
-*FollowMeIsDisplayNameExist
-*This function make a user registration.
-*get method.
-*/
+/*********************************************************************/
+/* FollowMeIsDisplayNameExist -                                      */
+/* This function make a user registration.                           */
+/* get method.                                                       */
+/*********************************************************************/
 exports.FollowMeIsDisplayNameExist = function(req, res) {
     console.log("FollowMeIsDisplayNameExist, In");
     var usersCollection = common.GetUsersCollectionName();
@@ -202,13 +201,12 @@ exports.FollowMeIsDisplayNameExist = function(req, res) {
     console.log("FollowMeIsDisplayNameExist, Out");
 }
 
-/*
-*FollowMeSignIn
-*This function make a user registration.
-*post method.
-*Assumption: The User (email) does not exist in the db.
-*/
-//TODO: add API message for success and for failed.
+/*********************************************************************/
+/* FollowMeSignIn -                                                  */
+/* This function make a user registration.                           */
+/* post method.                                                      */
+/* Assumption: The User (email) does not exist in the db.            */
+/*********************************************************************/
 exports.FollowMeSignIn = function(req, res) {
     console.log("FollowMeSignIn, In");
     var usersCollection = common.GetUsersCollectionName();
@@ -229,26 +227,23 @@ exports.FollowMeSignIn = function(req, res) {
     
     console.log("FollowMeSignIn, Out");
 }
-    
-/*
-*FollowMeSetFollower
-*This function create a follower to a given user.
-*This function return the user path
-*post method.
-*/
-//TODO: check if nodejs/express has session if yes than the function do not need to get the user email.
+
+/*********************************************************************/
+/* FollowMeSetFollower -                                             */
+/* This function create a follower to a given user.                  */
+/* This function return the user path                                */
+/* post method                                                       */
+/*********************************************************************/
 exports.FollowMeSetFollower = function(req, res) {
     console.log("FollowMeSetFollower, In");
     var usersCollection = common.GetUsersCollectionName();
     var followMeDB = common.GetDBConnection();
     var follower = req.body;
     console.log("/FollowMeSetFollower, follower details: " + JSON.stringify(follower) + "\n" );
-    //TODO:implement.
     var email = req.params.email;
     
     if (email) {
         followMeDB.collection(usersCollection, function(err, collection) {
-            //TODO: check nodjs/express for session. if yes change email to id.
             collection.update({'Email':email}, {$push:{'Follower' : follower}}, {safe:true}, function(err, result) {
                 if (err) {
                     console.log('Error updating user Follower: ' + err);
@@ -263,26 +258,29 @@ exports.FollowMeSetFollower = function(req, res) {
     console.log("FollowMeSetFollower, Out");
 }
 
-/*
-*FollowMeAddFriend
-*This function add a friend to a given user.
-*Function assumption: The email to add as a friend EXIST! (client side would check if exist before invoke this function).
-*post method.
-*/
-//TODO: check if nodejs/express has session if yes than the function do not need to get the user email.
-//TODO: complete. need to send all the user information???
+/********************************************************************/
+/* FollowMeAddFriend -                                              */
+/* This function add a friend to a given user.                      */
+/* Function assumption: The email to add as a friend EXIST!         */
+/* (client side would check if exist before invoke this function).  */
+/* post method                                                      */
+/********************************************************************/
 exports.FollowMeAddFriend = function(req, res) {
     console.log("FollowMeAddFriend, In");
+
     var usersCollection = common.GetUsersCollectionName();
     var followMeDB = common.GetDBConnection();
     var email = req.params.email;
     console.log('email: ' + email);
     var friend = req.body;
+
     console.log("FollowMeAddFriend, friend details: " + JSON.stringify(friend) + "\n" );
-    if (email) {
-        followMeDB.collection(usersCollection, function(err, collection) {
-            //TODO: check nodjs/express for session. if yes change email to id.
-            collection.update({'Email':email}, {$push:{'Friends' : friend}}, {safe:true}, function(err, result) {
+    if (email) 
+    {
+        followMeDB.collection(usersCollection, function(err, collection) 
+        {
+            collection.update({'Email':email}, {$push:{'Friends' : friend}}, {safe:true}, function(err, result) 
+            {
                 if (err) {
                     console.log('Error updating user freind: ' + err);
                     res.send({'error':'An error has occurred'});
@@ -573,10 +571,9 @@ exports.FollowMeNotifyEmergency = function(request,
     console.log("FollowMeNotifyEmergency - Out");
 }
 
-
 /*************************************************************/
-/* FollowMeDropEvent -                                     */
-/* Drop event from the map                                 */
+/* FollowMeDropEvent -                                       */
+/* Drop event from the map                                   */
 /*************************************************************/
 exports.FollowMeDropEvent = function(request, 
                                      result)
@@ -717,29 +714,29 @@ exports.FollowMeGetCurrentLocation = function(  request,
     if(email == null)
     {
         console.log("FollowMeGetCurrentLocation - Invalid email value");
-        return;
     }
+    else
+    {
+        console.log('Retrieving current location for user with email: ' + email);
 
-    console.log('Retrieving current location for user with email: ' + email);
-
-    followMeDB.collection(  usersCollection, 
-                            function(   err, 
-                                        collection) 
-                            {
-                                collection.findOne( {'Email' : email}, 
-                                                    {   'Path.CurrentLocation' : true, 
-                                                        '_id' : false},
-                                                    function(error, item) 
-                                                    {
-                                                        result.setHeader(   "Content-Type", 
-                                                                            "text/plain");
-                                                        console.log("error = " + error);
-                                                        console.log("item = " + item);
-                                                        
-                                                        result.send(item);
-                                                    });
-                            });
-
+        followMeDB.collection(  usersCollection, 
+                                function(   err, 
+                                            collection) 
+                                {
+                                    collection.findOne( {'Email' : email}, 
+                                                        {   'Path.CurrentLocation' : true, 
+                                                            '_id' : false},
+                                                        function(error, item) 
+                                                        {
+                                                            result.setHeader(   "Content-Type", 
+                                                                                "text/plain");
+                                                            console.log("error = " + error);
+                                                            console.log("item = " + item);
+                                                            
+                                                            result.send(item);
+                                                        });
+                                });
+    }
     console.log("FollowMeGetCurrentLocation - Out");
 }
 
@@ -760,36 +757,36 @@ exports.FollowMeSetPath = function( request,
     if(email == null)
     {
         console.log("FollowMeSetPath - Invalid email value");
-        return;
     }
-    
-    console.log("FollowMeSetPath - Setting new path for user with email: " + email);
-    console.log("FollowMeSetPath - Path: \n" + JSON.stringify(path));
+    else
+    {
+        console.log("FollowMeSetPath - Setting new path for user with email: " + email);
+        console.log("FollowMeSetPath - Path: \n" + JSON.stringify(path));
 
-    followMeDB.collection(  usersCollection, 
-                            function(   err, 
-                                        collection)
-                            {
-                                collection.update(  {'Email' : email},
-                                                    {
-                                                        $set:{'Path' : path}
-                                                    },
-                                                    {safe:true},
-                                                    function(err, res)
-                                                    {
-                                                        if (err) 
+        followMeDB.collection(  usersCollection, 
+                                function(   err, 
+                                            collection)
+                                {
+                                    collection.update(  {'Email' : email},
                                                         {
-                                                            console.log("FollowMeSetPath - Error updating users students: " + err);
-                                                            result.send({'error':'An error has occurred'});
-                                                        } 
-                                                        else
+                                                            $set:{'Path' : path}
+                                                        },
+                                                        {safe:true},
+                                                        function(err, res)
                                                         {
-                                                            console.log('FollowMeSetPath - ' + res + ' document(s) updated');
-                                                            result.send(path);
-                                                        }
-                                                    });
-                            });
-
+                                                            if (err) 
+                                                            {
+                                                                console.log("FollowMeSetPath - Error updating users students: " + err);
+                                                                result.send({'error':'An error has occurred'});
+                                                            } 
+                                                            else
+                                                            {
+                                                                console.log('FollowMeSetPath - ' + res + ' document(s) updated');
+                                                                result.send(path);
+                                                            }
+                                                        });
+                                });
+    }
     console.log("FollowMeSetPath - Out");
 }
 
@@ -809,33 +806,33 @@ exports.FollowMeDropPath = function(request,
     if(email == null)
     {
         console.log("FollowMeDropPath - Invalid email value");
-        return;
     }
+    else
+    {
+        console.log("FollowMeDropPath - Dropping path for user with email: " + email);    
 
-    console.log("FollowMeDropPath - Dropping path for user with email: " + email);    
-
-    followMeDB.collection(  usersCollection, 
-                            function(   err, 
-                                        collection) 
-                            {
-                                collection.update(  {'Email':email},
-                                                    { $unset: { 'Path' : 1 }},
-                                                    {safe:true}, 
-                                                    function(   err, 
-                                                                res) 
-                                                    {
-                                                        if (err) 
+        followMeDB.collection(  usersCollection, 
+                                function(   err, 
+                                            collection) 
+                                {
+                                    collection.update(  { 'Email' : email },
+                                                        { $unset: { 'Path' : 1 }},
+                                                        { safe : true }, 
+                                                        function(   err, 
+                                                                    res) 
                                                         {
-                                                            result.send({'error':'An error has occurred - ' + err});
-                                                        }
-                                                        else
-                                                        {
-                                                            console.log("FollowMeDropPath - The path has removed from the document. result: " + res);
-                                                            result.send(request.body);
-                                                        }
-                                                    });
-                            });
-
+                                                            if (err) 
+                                                            {
+                                                                result.send({'error':'An error has occurred - ' + err});
+                                                            }
+                                                            else
+                                                            {
+                                                                console.log("FollowMeDropPath - The path has removed from the document. result: " + res);
+                                                                result.send(request.body);
+                                                            }
+                                                        });
+                                });
+    }
     console.log("FollowMeDropPath - Out");
 }
 
@@ -902,12 +899,12 @@ exports.FollowMeSendPath = function(request,
 /* FollowMeSendLocation -                                    */
 /* Sends the current location to another user                */
 /*************************************************************/
-exports.FollowMeSendLocation = function(request, 
-                                        result)
+exports.FollowMeSendCurrentLocation = function( request, 
+                                                result)
 {
     console.log("FollowMeGetCurrentLocation - In");
 
-        var usersCollection = common.GetUsersCollectionName();
+    var usersCollection = common.GetUsersCollectionName();
     var followMeDB = common.GetDBConnection();
     var fromPath = null;
     var from = request.body.from;

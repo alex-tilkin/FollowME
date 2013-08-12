@@ -1,45 +1,84 @@
 API Using examples:
 
+*****************************************************************************
+o followMeGetUserByEmail
+
+curl http://followme.hp.af.cm/users/getuser/alextilk@gmail.com
+*****************************************************************************
+o FollowMeGetAllUsers
+
+curl http://followme.hp.af.cm/users/getall/
+*****************************************************************************
+o FollowMeLogIn
+
+curl http://followme.hp.af.cm/users/login/alextilk@gmail.com/1985
+*****************************************************************************
+o FollowMeIsUserExist
+
+curl http://followme.hp.af.cm/users/userexist/alextilk@gmail.com
+
+*****************************************************************************
+o FollowMeIsDisplayNameExist
+
+curl "http://followme.hp.af.cm/users/displaynameexist/Shaolin Rabbi"
+*****************************************************************************
+o FollowMeAddFriend
+
+curl -X POST -H "Content-Type: application/json" -d '{ "Email" : "lior@gmail.com" }' localhost:3000/users/addfriend/alextilk@gmail.com
+*****************************************************************************
+o FollowMeSignIn
+
+curl -X POST -H "Content-Type: application/json" -d '{"Email": "yossi@gmail.com", "Password": "1990", "FirstName": "Yossi", "LastName": "Shimoni", "DisplayName": "YS", "ConnectionStatus": "Offline", "ProgressStatus": "Safe" }' http://followme.hp.af.cm/users/adduser/
+*****************************************************************************
+o FollowMeDeleteUser	++++++++++++++++++ NOT IMPLEMENTED
+
+curl -X DELETE http:/followme.hp.af.cm/users/deleteuser/yossi@gmail
+*****************************************************************************
+o FollowMeSetFollower
+
+curl -X POST -H "Content-Type: application/json" -d '{ alextilk@gmail.com }' http://followme.hp.af.cm/users/addfollower/lior@gmail.com
+*****************************************************************************
 o FollowMeGetCurrentLocation:
 
-curl localhost:3000/users/getcurrentlocation/lior@gmail.com
-
+curl http://followme.hp.af.cm/users/getcurrentlocation/lior@gmail.com
+*****************************************************************************
 o FollowMeSetPath:
 
-curl -X POST -H "Content-Type: application/json" -d '{"Start":{"Longtitude":400, "Latitude":300}, "End":{"Longtitude":500, "Latitude":400}, "Milestones":[{"Longtitude":420, "Latitude":320}, {"Longtitude":450, "Latitude":350}, {"Longtitude":480, "Latitude":380}], "CurrentLocation":{"Longtitude":20, "Latitude":20}}' http://localhost:3000/users/setpath/alextilk@gmail.com
-
+curl -X POST -H "Content-Type: application/json" -d '{"Start":{"Longtitude":400, "Latitude":300}, "End":{"Longtitude":500, "Latitude":400}, "Milestones":[{"Longtitude":420, "Latitude":320}, {"Longtitude":450, "Latitude":350}, {"Longtitude":480, "Latitude":380}], "CurrentLocation":{"Longtitude":20, "Latitude":20}}' http://followme.hp.af.cm/users/setpath/alextilk@gmail.com
+*****************************************************************************
 o FollowMeSendPath
 
-curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://localhost:3000/users/sendpath
-
+curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://followme.hp.af.cm/users/sendpath
+*****************************************************************************
 o FollowMeSetCurrentLocation
 
-curl -X POST -H "Content-Type: application/json" -d '{"Longtitude":113, "Latitude":113}' http://localhost:3000/users/setcurrentlocation/alextilk@gmail.com
-
+curl -X POST -H "Content-Type: application/json" -d '{"Longtitude":113, "Latitude":113}' http://followme.hp.af.cm/users/setcurrentlocation/alextilk@gmail.com
+*****************************************************************************
 o FollowMeSendCurrentLocation
 
-curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://localhost:3000/users/sendcurrentlocation
-
+curl -X POST -d "from=alextilk@gmail.com&to=lior@gmail.com" http://followme.hp.af.cm/users/sendcurrentlocation
+*****************************************************************************
 o FollowMeDropPath
 
-curl -X DELETE http://localhost:3000/users/droppath/alextilk@gmail.com
-
+curl -X DELETE http://followme.hp.af.cm/users/droppath/alextilk@gmail.com
+*****************************************************************************
 o FollowMeCreateEvent
 
-curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "EventType":{"Event":"Fire"}}' http://localhost:3000/events/createevent/sralexei@gmail.com
-
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "EventType":{"Event":"Fire"}}' http://followme.hp.af.cm/events/createevent/sralexei@gmail.com
+*****************************************************************************
 o FollowMeDropEvent
 
-curl -X DELETE -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}}' http://localhost:3000/events/dropevent/sralexei@gmail.com
-
+curl -X DELETE -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}}' http://followme.hp.af.cm/events/dropevent/sralexei@gmail.com
+*****************************************************************************
 o FollowMeNotifyEmergency
 
-curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "To":"lior@gmail.com"}' http://localhost:3000/events/notifyemergency/alextilk@gmail.com
-
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "To":"lior@gmail.com"}' http://followme.hp.af.cm/events/notifyemergency/alextilk@gmail.com
+*****************************************************************************
 o FollowMeChangeuserState
 
-curl -X POST -H "Content-Type: application/json" -d '{"ProgressStatus":"walking"}' http://localhost:3000/users/changeuserstate/alextilk@gmail.com
-
+curl -X POST -H "Content-Type: application/json" -d '{"ProgressStatus":"walking"}' http://followme.hp.af.cm/users/changeuserstate/alextilk@gmail.com
+*****************************************************************************
 o FollowMeGetAllNearbyEvents
 
-curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":111, "Latitude":111}}' http://localhost:3000/events/getnearbyevents/
+curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":111, "Latitude":111}}' http://followme.hp.af.cm/events/getnearbyevents/
+*****************************************************************************
