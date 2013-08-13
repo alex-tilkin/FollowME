@@ -265,7 +265,7 @@ exports.FollowMeSetFollower = function(req, res) {
     
     if (email) {
         followMeDB.collection(usersCollection, function(err, collection) {
-            collection.update({'Email':email}, {$push:{'Follower' : follower}}, {safe:true}, function(err, result) {
+            collection.update({'Email':email}, {$set:{'Follower' : follower}}, {safe:true}, function(err, result) {
                 if (err) {
                     console.log('Error updating user Follower: ' + err);
                     res.send({'error':'An error has occurred'});
@@ -984,4 +984,51 @@ exports.FollowMeSendCurrentLocation = function( request,
                                 });
     }
     console.log("FollowMeSendCurrentLocation - Out");
+}
+
+/*************************************************************/
+/* FollowMeDropFollower -                                    */
+/* Removes follower                                          */
+/*************************************************************/
+exports.FollowMeDropFollower = function(request, 
+                                        result)
+{
+    console.log("FollowMeDropFollower - In");
+
+    var usersCollection = common.GetUsersCollectionName();
+    var followMeDB = common.GetDBConnection();
+    var email = request.params.email;
+
+    if(email == null)
+    {
+        console.log("FollowMeDropFollower - Invalid email value, email = " + email);
+    }
+    else
+    {
+        console.log("FollowMeDropFollower - Dropping follower from user with email: " + email);    
+
+        followMeDB.collection(  usersCollection, 
+                                function(   err, 
+                                            collection) 
+                                {
+                                    collection.update(  { 'Email' : email },
+                                                        { $unset: { 'Follower' : 1 }},
+                                                        { safe : true }, 
+                                                        function(   err, 
+                                                                    res) 
+                                                        {
+                                                            if (err) 
+                                                            {
+                                                                console.log("FollowMeDropFollower - Error in dropping follower: " + err);
+                                                                result.send({'FollowMeDropFollower - error':'An error has occurred - ' + err});
+                                                            }
+                                                            else
+                                                            {
+                                                                console.log("FollowMeDropFollower - The follower has removed from the document. result: " + res);
+                                                                result.send(request.body);
+                                                            }
+                                                        });
+                                });
+    }
+    console.log("FollowMeDropFollower - Out");
 }

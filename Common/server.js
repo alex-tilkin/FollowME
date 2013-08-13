@@ -40,6 +40,7 @@ app.post('/users/addfollower/:email', followMeApi.FollowMeSetFollower);
 
 /* DELETEs */
 app.delete('/users/droppath/:email', followMeApi.FollowMeDropPath);
+app.delete('/users/dropfollower/:email', followMeApi.FollowMeDropFollower);
 app.delete('/events/dropevent/:email', followMeApi.FollowMeDropEvent);
 app.delete('/users/deleteuser/:email', followMeApi.FollowMeDeleteUser);
 

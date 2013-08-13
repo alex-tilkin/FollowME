@@ -36,7 +36,7 @@ curl -X DELETE http:/followme.hp.af.cm/users/deleteuser/yossi@gmail.com
 *****************************************************************************
 o FollowMeSetFollower
 
-curl -X POST -H "Content-Type: application/json" -d '{ alextilk@gmail.com }' http://followme.hp.af.cm/users/addfollower/lior@gmail.com
+curl -X POST -H "Content-Type: application/json" -d '{ "Email" : "alextilk@gmail.com" }' http://localhost:3000/users/addfollower/lior@gmail.com
 *****************************************************************************
 o FollowMeGetCurrentLocation:
 
@@ -81,4 +81,8 @@ curl -X POST -H "Content-Type: application/json" -d '{"ProgressStatus":"walking"
 o FollowMeGetAllNearbyEvents
 
 curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":111, "Latitude":111}}' http://followme.hp.af.cm/events/getnearbyevents/
+*****************************************************************************
+o FollowMeDropFollower
+
+curl -X DELETE -H "Content-Type: application/json" -d '{ "Email" : "alextilk@gmail.com" }' http://localhost:3000/users/dropfollower/lior@gmail.com
 *****************************************************************************
