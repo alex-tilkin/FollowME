@@ -1,5 +1,14 @@
+/**********************************************************/
+/* Used to retreive DB connection information             */
+/**********************************************************/
 var common = require('./FollowMeServerDbConnect');
 
+/*********************************************************************/
+/* Constants -                                                       */
+/* The constants below are responses from the server for quries.     */
+/* They are used by the application in order to understnad qureis'   */
+/* responses.                                                        */
+/*********************************************************************/
 var Constants = {
     USER_LOGIN_SUCCESS: 'A00',
     USER_LOGOUT_SUCCESS: 'A01',

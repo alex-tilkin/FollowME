@@ -24,7 +24,7 @@ curl "http://followme.hp.af.cm/users/displaynameexist/Shaolin Rabbi"
 *****************************************************************************
 o FollowMeAddFriend
 
-curl -X POST -H "Content-Type: application/json" -d '{ "Email" : "lior@gmail.com" }' localhost:3000/users/addfriend/alextilk@gmail.com
+curl -X POST -H "Content-Type: application/json" -d '{ "Friend" : "lior@gmail.com" }' localhost:3000/users/addfriend/alextilk@gmail.com
 *****************************************************************************
 o FollowMeSignIn
 
