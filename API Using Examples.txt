@@ -30,9 +30,9 @@ o FollowMeSignIn
 
 curl -X POST -H "Content-Type: application/json" -d '{"Email": "yossi@gmail.com", "Password": "1990", "FirstName": "Yossi", "LastName": "Shimoni", "DisplayName": "YS", "ConnectionStatus": "Offline", "ProgressStatus": "Safe" }' http://followme.hp.af.cm/users/adduser/
 *****************************************************************************
-o FollowMeDeleteUser	++++++++++++++++++ NOT IMPLEMENTED
+o FollowMeDeleteUser
 
-curl -X DELETE http:/followme.hp.af.cm/users/deleteuser/yossi@gmail
+curl -X DELETE http:/followme.hp.af.cm/users/deleteuser/yossi@gmail.com
 *****************************************************************************
 o FollowMeSetFollower
 
