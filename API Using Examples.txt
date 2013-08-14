@@ -72,7 +72,7 @@ curl -X DELETE -H "Content-Type: application/json" -d '{"Location":{"Longtitude"
 *****************************************************************************
 o FollowMeNotifyEmergency
 
-curl -X POST -H "Content-Type: application/json" -d '{"Location":{"Longtitude":400, "Latitude":300}, "To":"lior@gmail.com"}' http://followme.hp.af.cm/events/notifyemergency/alextilk@gmail.com
+curl -X POST -H "Content-Type: application/json" http://localhost:3000/events/notifyemergency/lior@gmail.com
 *****************************************************************************
 o FollowMeChangeuserState
 

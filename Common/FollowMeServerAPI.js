@@ -462,7 +462,7 @@ exports.FollowMeChangeuserState = function(request,
                         if (err) 
 
                         {
-                            console.log("FollowMeNotifyEmergency - Error Creating event: " + err);
+                            console.log("FollowMeChangeuserState - Error Creating event: " + err);
                             result.send({'error':'An error has occurred'});
                         } 
                         else
@@ -490,16 +490,9 @@ exports.FollowMeNotifyEmergency = function(request,
     var eventsCollection = common.GetEventsCollectionName();
     var usersCollection = common.GetUsersCollectionName();
     var email = request.params.email;
-    var UserBody = request.body;
-    console.log("FollowMeNotifyEmergency request body: " + JSON.stringify(UserBody));    
- 
-    if(email == null)
-    {
-        console.log("FollowMeNotifyEmergency - Invalid email value");
-        return;
-    }
 
-    followMeDB.collection(eventsCollection, 
+
+    followMeDB.collection(usersCollection, 
         function(err, collection)
         {                        
             if (err) 
@@ -508,86 +501,101 @@ exports.FollowMeNotifyEmergency = function(request,
                 result.send(err);
             }
             else
-            {   
-                var UserEvent={};
-                UserEvent["Location"] = UserBody["Location"];
-                console.log("FollowMeNotifyEmergency was here");
-                                 
-                UserEvent["Creator"] = email;
-                UserEvent["Approvals"] = 1;
-                UserEvent["EventType"] = {"Event" : "Emergency"};
-                
-                var dCurr = new Date();
-                                            
-                var CurrDate={};
-                CurrDate["Day"] = dCurr.getDate();
-                CurrDate["Month"] = dCurr.getMonth();
-                CurrDate["Year"] = dCurr.getFullYear();
-                
-                var CurrTime = {};
-                CurrTime["Seconds"] = dCurr.getSeconds();
-                CurrTime["Minutes"] = dCurr.getMinutes();
-                CurrTime["Hours"] = dCurr.getHours();
-                                            
-                var TimeStamp = {};
-                TimeStamp["Date"] = CurrDate;
-                TimeStamp["Time"] = CurrTime;
-                
-                UserEvent["TimeStamp"] = TimeStamp;
-                
-                console.log("FollowMeNotifyEmergency Final json: " + JSON.stringify(UserEvent)); 
-                
-                collection.insert(UserEvent,  
-                    function(err, res)
+            {
+                collection.findOne( {'Email' : email}, 
+                    {   'Path' : true,
+                        'Follower' : true,
+                        '_id' : false},
+                    function(error, item) 
                     {
                         if (err) 
 
                         {
-                            console.log("FollowMeNotifyEmergency - Error Creating event: " + err);
+                            console.log("FollowMeNotifyEmergency - Error updating users students: " + err);
                             result.send({'error':'An error has occurred'});
                         } 
                         else
                         {
-                            console.log('FollowMeNotifyEmergency - ' + res + ' document(s) updated');
-                            
-                            followMeDB.collection(usersCollection, 
-                            function(err, collection)
-                            {                        
-                                if (err) 
+                            collection.update({'Email' : item['Follower']['Email']},
                                 {
-                                    console.log("FollowMeNotifyEmergency Error: " + err);
-                                    result.send(err);
-                                }
-                                else
+                                    $set:{'Followee.CurrentLocation' : item['Path']['CurrentLocation']}
+                                },
+                                {safe:true},
+                                function(err, res)
                                 {
-                                                        
-                                    collection.update({'Email' : UserBody["To"]},
-                                        {
-                                            $set:{'Followee.CurrentLocation' : UserBody["Location"]}
-                                        },
-                                        {safe:true},
-                                        function(err, res)
-                                        {
-                                            if (err) 
+                                    if (err) 
 
-                                            {
-                                                console.log("FollowMeNotifyEmergency - Error updating users students: " + err);
-                                                result.send({'error':'An error has occurred'});
-                                            } 
-                                            else
-                                            {
-                                                console.log('FollowMeNotifyEmergency - ' + res + ' document(s) updated');
-                                                result.send(UserBody["Location"]);
-                                            }
-                                        });
-                                }
-                            });
-                            
+                                    {
+                                        console.log("FollowMeNotifyEmergency - Error updating users students: " + err);
+                                        result.send({'error':'An error has occurred'});
+                                    } 
+                                    else
+                                    {
+                                        followMeDB.collection(eventsCollection, 
+                                            function(err, collection)
+                                            {                        
+                                                if (err) 
+                                                {
+                                                    console.log("FollowMeNotifyEmergency Error: " + err);
+                                                    result.send(err);
+                                                }
+                                                else
+                                                {   
+                                                    var UserEvent={};
+                                                    UserEvent["Location"] = item['Path']['CurrentLocation'];
+                                                    console.log("FollowMeNotifyEmergency was here");
+                                                                     
+                                                    UserEvent["Creator"] = email;
+                                                    UserEvent["Approvals"] = 1;
+                                                    UserEvent["EventType"] = {"Event" : "Emergency"};
+                                                    
+                                                    var dCurr = new Date();
+                                                                                
+                                                    var CurrDate={};
+                                                    CurrDate["Day"] = dCurr.getDate();
+                                                    CurrDate["Month"] = dCurr.getMonth();
+                                                    CurrDate["Year"] = dCurr.getFullYear();
+                                                    
+                                                    var CurrTime = {};
+                                                    CurrTime["Seconds"] = dCurr.getSeconds();
+                                                    CurrTime["Minutes"] = dCurr.getMinutes();
+                                                    CurrTime["Hours"] = dCurr.getHours();
+                                                                                
+                                                    var TimeStamp = {};
+                                                    TimeStamp["Date"] = CurrDate;
+                                                    TimeStamp["Time"] = CurrTime;
+                                                    
+                                                    UserEvent["TimeStamp"] = TimeStamp;
+                                                    
+                                                    console.log("FollowMeNotifyEmergency Final json: " + JSON.stringify(UserEvent)); 
+                                                    
+                                                    collection.insert(UserEvent,  
+                                                        function(err, res)
+                                                        {
+                                                            if (err) 
+
+                                                            {
+                                                                console.log("FollowMeNotifyEmergency - Error Creating event: " + err);
+                                                                result.send({'error':'An error has occurred'});
+                                                            } 
+                                                            else
+                                                            {
+                                                                console.log('FollowMeNotifyEmergency - ' + res + ' document(s) updated');
+                                                                
+                                                                result.send(item['Path']['CurrentLocation']);                            
+                                                            }
+                                                        });          
+                                                    
+                                                }                        
+                                            });
+                                    }
+                                });
                         }
-                    });          
-                
-            }                        
+                    });
+                                                 
+            }
         });
+    
                 
     console.log("FollowMeNotifyEmergency - Out");
 }
