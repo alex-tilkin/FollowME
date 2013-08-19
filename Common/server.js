@@ -44,4 +44,8 @@ app.delete('/users/dropfollower/:email', followMeApi.FollowMeDropFollower);
 app.delete('/events/dropevent/:email', followMeApi.FollowMeDropEvent);
 app.delete('/users/deleteuser/:email', followMeApi.FollowMeDeleteUser);
 
+
+app.use('/public', express.static(__dirname + '/public'));
+app.get('/', express.static(__dirname + '/public'));
+
 app.listen(port,host);
